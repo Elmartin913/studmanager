@@ -16,6 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from smapp.views import (
+    SchoolView,
+    SchoolClassView,
+)
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', SchoolView.as_view(),
+         name="index"),
+    path('class/<int:school_class>', SchoolClassView.as_view(),
+         name="school-class"),
 ]
