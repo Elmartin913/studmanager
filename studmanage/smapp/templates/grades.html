@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <ul>
+        <li>{{ student.last_name }}</li>
+        <li>{{ student.get_school_class_display }}</li>
+        <li>{{ subject.name }}</li>
+        <li>{{ subject.teacher_name }}</li>
+        <li>{{ avg }}</li>
+
+        {% if grades|length > 0 %}
+            <li>
+                <ul>
+                    {% for grade in grades %}
+                        <li>{{ grade.get_grade_display }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% else %}
+            <li>Brak ocen !</li>
+        {% endif %}
+
+
+
+
+{% endblock %}
+

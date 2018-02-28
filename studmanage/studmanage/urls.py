@@ -14,11 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 
 from smapp.views import (
     SchoolView,
     SchoolClassView,
+    StudentView,
+    Grades,
 )
 
 
@@ -28,4 +30,8 @@ urlpatterns = [
          name="index"),
     path('class/<int:school_class>', SchoolClassView.as_view(),
          name="school-class"),
+    path('^student/<student_id>', StudentView.as_view(),
+         name="student_details"),
+    path('^grades/<int:student_id>/<int:subject_id>', Grades.as_view(),
+         name="student_grades"),
 ]

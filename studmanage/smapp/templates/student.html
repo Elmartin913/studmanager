@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <ul>
+        <li>{{student.first_name }}</li>
+        <li>{{student.last_name }}</li>
+        <li>{{student.get_school_class_display }}</li>
+    </ul>
+<ul>
+    {% for subject in subjects %}
+        <a href='/grades/{{ student.id }}/{{subject.id}}'>{{ subject.name }}</a><br>
+    {%endfor%}
+</ul>
+
+
+{% endblock %}
