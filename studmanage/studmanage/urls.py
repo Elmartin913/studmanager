@@ -23,6 +23,7 @@ from smapp.views import (
     Grades,
     StudentSearchView,
     AddStudentView,
+    SchoolSubjectCreateView,
 )
 
 
@@ -40,4 +41,6 @@ urlpatterns = [
             name="student_search"),
     re_path(r'^add_student', AddStudentView.as_view(),
             name="add_student"),
+    re_path(r'create_school_subject', SchoolSubjectCreateView.as_view(),
+            name="create_school_subject"),
 ]

@@ -15,4 +15,8 @@ class AddStudentForm(forms.Form):
     year_of_birth = forms.IntegerField(label="Data urodzenia")
 
 
-
+class SchoolSubjectForm(forms.ModelForm):
+    class Meta:
+        model = SchoolSubject
+        # fields = '__all__'
+        fields = ['name', 'teacher_name']

@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.views import View
+from django.views.generic.edit import CreateView
 from django.http import HttpResponse, HttpResponseRedirect, request
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 # Create your views here.
 from .models import (
@@ -15,6 +16,7 @@ from .models import (
 from .forms import (
     StudentSearchForm,
     AddStudentForm,
+    SchoolSubjectForm,
 )
 
 
@@ -115,3 +117,9 @@ class AddStudentView(View):
 
         else:
             return render(request, 'add_student.html', {'form': form})
+
+
+class SchoolSubjectCreateView(CreateView):
+    form_class = SchoolSubjectForm
+    template_name = 'school_subject_form.html'
+    success_url = reverse_lazy('create_school_subject')
