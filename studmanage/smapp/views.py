@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.views import View
+from django.http import HttpResponse, HttpResponseRedirect, request
+from django.urls import reverse
 
 # Create your views here.
 from .models import (
@@ -12,6 +14,7 @@ from .models import (
 
 from .forms import (
     StudentSearchForm,
+    AddStudentForm,
 )
 
 
@@ -85,3 +88,30 @@ class StudentSearchView(View):
             students = Student.objects.filter(last_name__icontains=name)
             # niezwaza na wielkosc znakow
             return render(request, 'student_search.html', {'form': form, 'students': students})
+
+
+class AddStudentView(View):
+
+    def get(self, request):
+        form = AddStudentForm()
+        return render(request, 'add_student.html', {'form': form})
+
+    def post(self, request):
+        form = AddStudentForm(request.POST)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            school_class = form.cleaned_data['school_class']
+            year_of_birth = form.cleaned_data['year_of_birth']
+            new_student = Student.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                school_class=school_class,
+                year_of_birth=year_of_birth
+            )
+            # new_student = Student.objects.create(**form.cleaned_data) rozpakowanie slownika
+            url = reverse('student_details', kwargs={'student_id': new_student.id})   # generuje url
+            return HttpResponseRedirect(url)
+
+        else:
+            return render(request, 'add_student.html', {'form': form})

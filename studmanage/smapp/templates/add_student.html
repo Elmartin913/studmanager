@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+</form>
+<h2>Nowy student:</h2>
+<p>{{ new.first_name }}</p>
+<p>{{ new.last_name }}</p>
+<p>{{ new.get_school_class_display }}</p>
+
+{% endblock %}
+
