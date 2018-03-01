@@ -10,6 +10,10 @@ from .models import (
     StudentGrades,
 )
 
+from .forms import (
+    StudentSearchForm,
+)
+
 
 class SchoolView(View):
 
@@ -66,3 +70,18 @@ class Grades(View):
             'avg': avg,
         }
         return render(request, 'grades.html', ctx)
+
+
+class StudentSearchView(View):
+
+    def get(self, request):
+        form = StudentSearchForm()
+        return render(request, 'student_search.html', {'form': form})
+
+    def post(self, request):
+        form = StudentSearchForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            students = Student.objects.filter(last_name__icontains=name)
+            # niezwaza na wielkosc znakow
+            return render(request, 'student_search.html', {'form': form, 'students': students})
