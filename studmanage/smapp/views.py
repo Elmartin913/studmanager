@@ -13,11 +13,13 @@ from .models import (
     Student,
     SchoolSubject,
     StudentGrades,
+    PresenceList,
 )
 
 from .forms import (
     StudentSearchForm,
     AddStudentForm,
+    PresenceListForm,
     SchoolSubjectForm,
     MessageForm,
 )
@@ -120,6 +122,27 @@ class AddStudentView(View):
 
         else:
             return render(request, 'add_student.html', {'form': form})
+
+
+class PresenceListView(View):
+
+    def get(self, request, student_id, date):
+        form = PresenceListForm(initial={'day': date})
+        return render(request, 'class_presence.html', {'form': form})
+
+    def post(self, request, student_id, date):
+        form = PresenceListForm(request.POST)
+        if form.is_valid():
+            student = form.cleaned_data['student']
+            day = form.cleaned_data['day']
+            present = form.cleaned_data['present']
+            PresenceList.objects.create(
+                student=student,
+                day=day,
+                present=present
+            )
+            url = reverse('student_details', kwargs={'student_id': student.id})
+            return HttpResponseRedirect(url)
 
 
 class SchoolSubjectCreateView(CreateView):

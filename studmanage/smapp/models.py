@@ -65,10 +65,15 @@ class StudentGrades(models.Model):
     grade = models.FloatField(choices=GRADES)
 
 
+class PresenceList(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    day = models.DateField()
+    present = models.NullBooleanField()
+
+
 class Message(models.Model):
     subject = models.CharField(max_length=256, verbose_name='Temat')
     content = models.TextField(null=True)
     date_sent = models.DateTimeField(auto_now_add=True)  # tylko data utworzenia, auto_now - czas ostatniego uzycia
     to = models.ForeignKey(SchoolSubject, on_delete=models.CASCADE)
     author = models.ForeignKey(Student, on_delete=models.CASCADE)
-

@@ -15,6 +15,13 @@ class AddStudentForm(forms.Form):
     year_of_birth = forms.IntegerField(label="Data urodzenia")
 
 
+class PresenceListForm(forms.Form):
+
+    student = forms.ModelChoiceField(label='Student', queryset=Student.objects.all())
+    day = forms.DateField(label='Data', widget=forms.HiddenInput())
+    present = forms.NullBooleanField(label='Obecnosc')
+
+
 class SchoolSubjectForm(forms.ModelForm):
     class Meta:
         model = SchoolSubject
