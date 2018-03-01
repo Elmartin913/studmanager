@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.template.response import TemplateResponse
 from django.views import View
 from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
+from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect, request
 from django.urls import reverse, reverse_lazy
 
@@ -130,3 +132,8 @@ class MessageFormView(CreateView):
     form_class = MessageForm
     template_name = 'message_create_form.html'
     success_url = reverse_lazy('compose_message')
+
+
+class UserListView(ListView):
+    model = User
+    template_name = 'user_list.html'
