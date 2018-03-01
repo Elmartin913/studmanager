@@ -24,6 +24,7 @@ from smapp.views import (
     StudentSearchView,
     AddStudentView,
     SchoolSubjectCreateView,
+    MessageFormView,
 )
 
 
@@ -43,4 +44,6 @@ urlpatterns = [
             name="add_student"),
     re_path(r'create_school_subject', SchoolSubjectCreateView.as_view(),
             name="create_school_subject"),
+    re_path(r'compose_message', MessageFormView.as_view(),
+            name="compose_message"),
 ]

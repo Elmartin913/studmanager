@@ -1,5 +1,5 @@
 from django import forms
-from .models import (SCHOOL_CLASS, Student, SchoolSubject)
+from .models import (SCHOOL_CLASS, Student, SchoolSubject, Message)
 
 
 class StudentSearchForm(forms.Form):
@@ -20,3 +20,9 @@ class SchoolSubjectForm(forms.ModelForm):
         model = SchoolSubject
         # fields = '__all__'
         fields = ['name', 'teacher_name']
+
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        exclude = ['date_sent']

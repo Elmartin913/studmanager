@@ -60,6 +60,15 @@ class Student(models.Model):
 
 
 class StudentGrades(models.Model):
-    student = models.ForeignKey(Student, on_delete = models.CASCADE)
-    school_subject = models.ForeignKey(SchoolSubject, on_delete = models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    school_subject = models.ForeignKey(SchoolSubject, on_delete=models.CASCADE)
     grade = models.FloatField(choices=GRADES)
+
+
+class Message(models.Model):
+    subject = models.CharField(max_length=256, verbose_name='Temat')
+    content = models.TextField(null=True)
+    date_sent = models.DateTimeField(auto_now_add=True)  # tylko data utworzenia, auto_now - czas ostatniego uzycia
+    to = models.ForeignKey(SchoolSubject, on_delete=models.CASCADE)
+    author = models.ForeignKey(Student, on_delete=models.CASCADE)
+

@@ -17,6 +17,7 @@ from .forms import (
     StudentSearchForm,
     AddStudentForm,
     SchoolSubjectForm,
+    MessageForm,
 )
 
 
@@ -123,3 +124,9 @@ class SchoolSubjectCreateView(CreateView):
     form_class = SchoolSubjectForm
     template_name = 'school_subject_form.html'
     success_url = reverse_lazy('create_school_subject')
+
+
+class MessageFormView(CreateView):
+    form_class = MessageForm
+    template_name = 'message_create_form.html'
+    success_url = reverse_lazy('compose_message')
