@@ -36,7 +36,7 @@ urlpatterns = [
          name="index"),
     path('class/<int:school_class>', SchoolClassView.as_view(),
          name="school-class"),
-    path('^student/<student_id>', StudentView.as_view(),
+    path('^student/<int:student_id>', StudentView.as_view(),
          name="student_details"),
     path('^grades/<int:student_id>/<int:subject_id>', Grades.as_view(),
          name="student_grades"),
