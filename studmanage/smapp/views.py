@@ -4,7 +4,8 @@ from django.views import View
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.contrib.auth.models import User
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseRedirect, request
 from django.urls import reverse, reverse_lazy
 
@@ -24,6 +25,7 @@ from .forms import (
     SchoolSubjectForm,
     MessageForm,
     LoginForm,
+    ChangePassForm,
 )
 
 
@@ -190,3 +192,29 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return HttpResponseRedirect(reverse('login'))
+
+
+class ChangePassView(PermissionRequiredMixin, View):
+    permission_required = 'change_user'
+
+    def get(self, request, user_id):
+        form = ChangePassForm()
+        return render(request, 'change_pass.html', {'form': form})
+
+    def post(self, request, user_id):
+        form = ChangePassForm(request.POST)
+        if form.is_valid():
+            user = User.objest.get(pk=user_id)
+            user = authenticate(
+                username=user.username,
+                password=form.clean_data['old_pass']
+            )
+            if not user.check_password(form.cleaned_data['old_pass']):
+                return HttpResponse('Niepoprane aktualne haslo')
+
+            if form.cleaned_data['new_pass'] != form.cleaned_data['new_pass_2']:
+                return HttpResponse('Nowe hasla nie s takie same')
+
+            user.set_password(form.cleaned_data['new_pass'])
+            user.save()
+            return HttpResponse('Haso zmienione')

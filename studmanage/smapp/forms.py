@@ -38,3 +38,9 @@ class MessageForm(forms.ModelForm):
 class LoginForm(forms.Form):
     login = forms.CharField(label='Login')
     password = forms.CharField(label='Haslo', widget=forms.PasswordInput)
+
+
+class ChangePassForm(forms.Form):
+    old_pass = forms.CharField(widget=forms.PasswordInput())
+    new_pass = forms.CharField(widget=forms.PasswordInput())
+    old_pass_2 = forms.CharField(widget=forms.PasswordInput())

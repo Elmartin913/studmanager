@@ -29,6 +29,7 @@ from smapp.views import (
     UserListView,
     LoginView,
     LogoutView,
+    ChangePassView,
 )
 
 
@@ -58,4 +59,6 @@ urlpatterns = [
             name="login"),
     re_path(r'logout', LogoutView.as_view(),
             name="logout"),
+    re_path(r'reset_password/(?P<user_id>(\d)+)$', ChangePassView.as_view(),
+            name="reset_password"),
 ]
