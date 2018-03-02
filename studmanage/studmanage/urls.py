@@ -27,6 +27,8 @@ from smapp.views import (
     SchoolSubjectCreateView,
     MessageFormView,
     UserListView,
+    LoginView,
+    LogoutView,
 )
 
 
@@ -52,4 +54,8 @@ urlpatterns = [
             name="compose_message"),
     re_path(r'list_users', UserListView.as_view(),
             name="list_users"),
+    re_path(r'login', LoginView.as_view(),
+            name="login"),
+    re_path(r'logout', LogoutView.as_view(),
+            name="logout"),
 ]

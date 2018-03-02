@@ -33,3 +33,8 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         exclude = ['date_sent']
+
+
+class LoginForm(forms.Form):
+    login = forms.CharField(label='Login')
+    password = forms.CharField(label='Haslo', widget=forms.PasswordInput)

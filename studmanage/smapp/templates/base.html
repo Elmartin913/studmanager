@@ -11,6 +11,16 @@
         <ul>
             {% block content %} {% endblock %}
         </ul>
+        <footer>
+            <p>{{ request.user.username }}</p>
+            {% if request.user.is_authenticated %}
+                <p><a href="{% url 'logout' %}">Logout</a></p>
+            {% else %}
+                <p><a href="{% url 'login' %}">Login</a></p>
+            {% endif %}
+            <p>Data: {{ date }}</p>
+            <p>Data: {{ version }}</p>
+        </footer>
     </body>
 
 </html>

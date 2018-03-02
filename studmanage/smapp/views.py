@@ -4,6 +4,7 @@ from django.views import View
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.contrib.auth.models import User
+from django.contrib.auth import login, logout
 from django.http import HttpResponse, HttpResponseRedirect, request
 from django.urls import reverse, reverse_lazy
 
@@ -22,6 +23,7 @@ from .forms import (
     PresenceListForm,
     SchoolSubjectForm,
     MessageForm,
+    LoginForm,
 )
 
 
@@ -160,3 +162,31 @@ class MessageFormView(CreateView):
 class UserListView(ListView):
     model = User
     template_name = 'user_list.html'
+
+
+class LoginView(View):
+
+    def get(self, request):
+        form = LoginForm()
+        return render(request, 'login.html', {'form': form})
+
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            login2 = form.cleaned_data['login']
+            password = form.cleaned_data['password']
+            user = authenticate(
+                username=login2,
+                password=password
+            )
+            if user is not None:
+                login(request, user)
+                return HttpResponse('Zalogowany {}'.format(user.username))
+            else:
+                return HttpResponse('Niepoprawne dane do logowania')
+
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(reverse('login'))
