@@ -48,7 +48,7 @@ class Student(models.Model):
     last_name = models.CharField(max_length=64)
     school_class = models.IntegerField(choices=SCHOOL_CLASS, verbose_name='Klasa')
     grades = models.ManyToManyField(SchoolSubject, through="StudentGrades")
-    year_of_birth = models.IntegerField(null=True, blank=True, verbose_name='Rok urodzenia')  # brlam pozwala na wyslanie niewypenionego pola
+    year_of_birth = models.IntegerField(null=True, blank=True, verbose_name='Rok urodzenia')  # blank pozwala na wyslanie niewypenionego pola
     suspended = models.BooleanField(default=False, verbose_name='Zawieszony')
 
     @property

@@ -204,10 +204,10 @@ class ChangePassView(PermissionRequiredMixin, View):
     def post(self, request, user_id):
         form = ChangePassForm(request.POST)
         if form.is_valid():
-            user = User.objest.get(pk=user_id)
+            user = User.objects.get(pk=user_id)
             user = authenticate(
                 username=user.username,
-                password=form.clean_data['old_pass']
+                password=form.cleaned_data['old_pass']
             )
             if not user.check_password(form.cleaned_data['old_pass']):
                 return HttpResponse('Niepoprane aktualne haslo')

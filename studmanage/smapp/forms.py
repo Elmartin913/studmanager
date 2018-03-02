@@ -1,5 +1,9 @@
 from django import forms
-from .models import (SCHOOL_CLASS, Student, SchoolSubject, Message)
+
+from .validators import range_validator
+from .models import (
+    SCHOOL_CLASS, Student, SchoolSubject, Message
+)
 
 
 class StudentSearchForm(forms.Form):
@@ -12,7 +16,7 @@ class AddStudentForm(forms.Form):
     first_name = forms.CharField(label='Imie', max_length=64)
     last_name = forms.CharField(label='Nazwisko', max_length=64)
     school_class = forms.ChoiceField(label='Klasa', choices=SCHOOL_CLASS)
-    year_of_birth = forms.IntegerField(label="Data urodzenia")
+    year_of_birth = forms.IntegerField(label="Data urodzenia", validators=[range_validator])
 
 
 class PresenceListForm(forms.Form):
@@ -43,4 +47,4 @@ class LoginForm(forms.Form):
 class ChangePassForm(forms.Form):
     old_pass = forms.CharField(widget=forms.PasswordInput())
     new_pass = forms.CharField(widget=forms.PasswordInput())
-    old_pass_2 = forms.CharField(widget=forms.PasswordInput())
+    new_pass_2 = forms.CharField(widget=forms.PasswordInput())
